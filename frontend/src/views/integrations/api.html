@@ -1,0 +1,23 @@
+
+<div id="api-content" class="integration-card">
+    <h3>Chave de API</h3>
+    <p>Utilize a sua chave de API para integrar a sua agenda com outras aplicações. Lembre-se de que a sua chave é secreta e não deve ser partilhada.</p>
+    
+    <div id="current-api-key-container" class="api-key-wrapper">
+        <label for="api-key-masked-input">Sua Chave de API Secreta</label>
+        <div class="input-group">
+            <input type="text" id="api-key-masked-input" readonly value="Carregando...">
+            <button id="regenerate-api-key-btn" class="btn-secondary btn-3d">Gerar Nova Chave</button>
+        </div>
+    </div>
+
+    <div id="new-api-key-container" class="api-key-wrapper hidden">
+        <label>Sua Nova Chave de API</label>
+        <div class="input-group">
+            <input type="text" id="new-api-key-display" readonly>
+            <button id="copy-new-key-btn" class="btn-submit btn-3d">Copiar</button>
+        </div>
+        <p class="warning-text">Copie a sua nova chave agora. Por razões de segurança, não poderemos mostrá-la novamente.</p>
+        <button id="confirm-new-key-btn" class="btn-secondary btn-3d">Entendido, voltar</button>
+    </div>
+</div>

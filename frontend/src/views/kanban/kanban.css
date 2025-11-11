@@ -1,0 +1,125 @@
+/* FILE: frontend/src/views/kanban/kanban.css */
+.kanban-view-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.view-header {
+    flex-shrink: 0;
+}
+
+.kanban-board-container {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+    overflow-x: auto; 
+    padding-bottom: 10px;
+}
+
+.kanban-column {
+    width: 350px;
+    flex-shrink: 0;
+    background-color: var(--main-bg); /* CORRIGIDO */
+    border-radius: var(--borda-arredondada, 12px);
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.2s, background-color 0.3s ease;
+}
+
+.kanban-column.is-dragging {
+    opacity: 0.5;
+    border: 2px dashed var(--primary-color);
+}
+
+.kanban-column-header {
+    padding: 15px;
+    border-bottom: 2px solid; /* A cor será herdada do 'color' abaixo */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: grab;
+    transition: border-color 0.3s ease;
+}
+
+.kanban-column-header:active {
+    cursor: grabbing;
+}
+
+.kanban-column-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    flex-grow: 1;
+    color: var(--text-primary); /* CORRIGIDO */
+    transition: color 0.3s ease;
+}
+
+.kanban-column-header .card-count {
+    background-color: var(--content-bg); /* CORRIGIDO */
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.kanban-cards {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-grow: 1;
+    transition: background-color 0.2s;
+    min-height: 150px;
+}
+
+/* CORRIGIDO: Efeito de arrastar para ambos os temas */
+.kanban-cards.drag-over {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+body.dark-mode .kanban-cards.drag-over {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.event-card {
+    background-color: var(--content-bg); /* CORRIGIDO */
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    border: 1px solid var(--border-color); /* ADICIONADO para melhor contraste no tema escuro */
+    cursor: grab;
+    transition: all 0.2s;
+}
+
+.event-card:active {
+    cursor: grabbing;
+}
+
+.event-card.is-dragging {
+    opacity: 0.5;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.event-card-header h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--text-primary); /* CORRIGIDO */
+    transition: color 0.3s ease;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.info-row i {
+    width: 15px;
+    text-align: center;
+}

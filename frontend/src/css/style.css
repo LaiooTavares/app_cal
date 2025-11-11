@@ -1,0 +1,334 @@
+/* FILE: frontend/src/css/style.css */
+/* --- RESET BÁSICO E VARIÁVEIS GLOBAIS --- */
+:root {
+    --primary-color: #367BF5;
+    --sidebar-bg: #F7F9FC;
+    --sidebar-icon-color: #8A9CB0;
+    --main-bg: #E9EEF9;
+    --content-bg: #FFFFFF;
+    --header-bg: transparent;
+    --text-primary: #333333;
+    --text-secondary: #777777;
+    --border-color: #e0e0e0;
+    --borda-arredondada: 24px;
+    --calendar-bg: #ffffff;
+    --calendar-text-primary: #333;
+    --calendar-text-secondary: #aaa;
+    --calendar-border: #f0f0f0;
+
+    /* -- Variáveis para os botões 3D -- */
+    --btn-primary-bg: #367BF5;
+    --btn-primary-shadow: #2a62c4;
+    --btn-primary-bg-hover: #4a89f8;
+    --btn-primary-shadow-hover: #2a62c4;
+    --btn-secondary-bg: #8A9CB0;
+    --btn-secondary-shadow: #6b7a8c;
+    --btn-text-color: #ffffff;
+    --btn-disabled-bg-top: #cccccc;
+    --btn-disabled-bg-bottom: #aaaaaa;
+    --btn-disabled-shadow: #888888;
+    --btn-disabled-text: #666666;
+
+    /* -- Variáveis para o Neumorfismo -- */
+    --neumorphic-shadow-dark: #d9dbe0;
+    --neumorphic-shadow-light: #ffffff;
+}
+
+/* --- VARIÁVEIS DO TEMA ESCURO --- */
+body.dark-mode {
+    --primary-color: #4A89F8;
+    --sidebar-bg: #1A1D21;
+    --sidebar-icon-color: #A0AEC0;
+    --main-bg: #101214;
+    --content-bg: #2D3748;
+    --header-bg: transparent;
+    --text-primary: #EDF2F7;
+    --text-secondary: #A0AEC0;
+    --border-color: #4A5568;
+    --calendar-bg: #2D3748;
+    --calendar-text-primary: #EDF2F7;
+    --calendar-text-secondary: #718096;
+    --calendar-border: #4A5568;
+
+    /* -- Variáveis para os botões 3D (Tema Escuro) -- */
+    --btn-primary-bg: #4A89F8;
+    --btn-primary-shadow: #2a62c4;
+    --btn-primary-bg-hover: #5a95fa;
+    --btn-primary-shadow-hover: #2a62c4;
+    --btn-secondary-bg: #4A5568;
+    --btn-secondary-shadow: #2D3748;
+    --btn-disabled-bg-top: #4A5568;
+    --btn-disabled-bg-bottom: #2D3748;
+    --btn-disabled-shadow: #1A1D21;
+    --btn-disabled-text: #A0AEC0;
+
+    /* -- Variáveis para o Neumorfismo (Tema Escuro - CORRIGIDO) -- */
+    --neumorphic-shadow-dark: #0c0e0f;
+    --neumorphic-shadow-light: #1c2024;
+}
+
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--main-bg);
+    color: var(--text-primary);
+    padding-top: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body:has(.impersonation-bar) {
+    padding-top: 45px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- ESTRUTURA PRINCIPAL --- */
+.dashboard-container {
+    display: flex;
+    height: 100%; 
+}
+
+.sidebar {
+    width: 90px;
+    background-color: var(--sidebar-bg);
+    height: 100%;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.menu { 
+    width: 100%; 
+}
+
+.menu ul { 
+    list-style: none; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 20px; 
+    padding-top: 10px; 
+}
+
+.menu li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    position: relative;
+    border-radius: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item i {
+    font-size: 2rem;
+    color: var(--sidebar-icon-color);
+    transition: color 0.3s, transform 0.3s ease;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* --- ESTILOS DE MENU (HOVER E ACTIVE) --- */
+.menu-item:not(.active):hover {
+    background-color: rgba(144, 164, 174, 0.1);
+}
+
+.menu-item:not(.active):hover i {
+    color: var(--primary-color);
+}
+
+.menu-item.active {
+    background-color: var(--content-bg);
+    box-shadow: none;
+    position: relative;
+    z-index: 2;
+}
+
+.menu-item.active i {
+    color: var(--primary-color);
+}
+
+/* --- EFEITO DE "ABRAÇO" --- */
+li:has(> a.active)::before,
+li:has(> a.active)::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: var(--sidebar-bg);
+    right: 0;
+    z-index: 1;
+    transition: background-color 0.3s ease;
+}
+
+li:has(> a.active)::before {
+    top: -12px;
+    border-bottom-right-radius: 12px;
+}
+
+li:has(> a.active)::after {
+    bottom: -12px;
+    border-top-right-radius: 12px;
+}
+
+.main-content {
+    margin-left: 90px;
+    width: calc(100% - 90px);
+    padding: 25px;
+    transition: margin-left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+#view-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--content-bg);
+    border-radius: var(--borda-arredondada);
+    padding: 25px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+    transition: background-color 0.3s ease;
+}
+
+/* --- COMPONENTES GLOBAIS --- */
+.theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.theme-switcher label {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.theme-switcher select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--content-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.view-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 10px 0;
+    background-color: var(--header-bg);
+    border-radius: 0;
+    margin-bottom: 20px;
+    box-shadow: none;
+    flex-shrink: 0;
+}
+
+.header h2 { font-size: 1.8rem; display: flex; align-items: baseline; }
+.header-right-controls { display: flex; align-items: center; gap: 20px; }
+.user-profile { display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 8px; transition: background-color 0.2s ease-in-out; position: relative; z-index: 101; }
+.user-profile:hover { background-color: rgba(144, 164, 174, 0.1); }
+#user-name-display { margin-right: 10px; font-weight: 500; font-size: 16px; color: var(--text-primary); }
+.user-icon { font-size: 28px; color: var(--text-secondary); }
+.dropdown-menu { display: none; position: absolute; top: 100%; right: 0; background-color: var(--content-bg); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: max-content; z-index: 1000; overflow: hidden; }
+.dropdown-menu.show { display: block; }
+.dropdown-menu a { display: flex; align-items: center; padding: 12px 15px; text-decoration: none; color: var(--text-primary); font-size: 15px; white-space: nowrap; }
+.dropdown-menu a:hover { background-color: rgba(144, 164, 174, 0.1); }
+.dropdown-menu a i { margin-right: 10px; color: var(--text-secondary); width: 20px; text-align: center; font-size: 1rem; }
+.impersonation-bar { background-color: #ffc107; color: #333; text-align: center; padding: 10px; font-weight: 500; position: fixed; top: 0; left: 0; width: 100%; z-index: 2000; display: flex; justify-content: center; align-items: center; gap: 15px; }
+.impersonation-bar button { padding: 5px 10px; border: 1px solid #333; border-radius: 5px; background-color: transparent; cursor: pointer; font-weight: bold; }
+.client-switcher { display: flex; align-items: center; }
+#client-select-dropdown { padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--content-bg); color: var(--text-primary); font-size: 0.9em; cursor: pointer; max-width: 200px; }
+.context-name { font-size: inherit; font-weight: inherit; color: var(--text-primary); margin-left: 8px; font-style: normal; }
+
+/* --- BOTÕES GLOBAIS --- */
+.btn-submit {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.2s;
+}
+.btn-submit:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background-color: var(--text-secondary);
+    color: var(--content-bg);
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.2s;
+}
+.btn-secondary:hover {
+    opacity: 0.9;
+}
+
+/* --- NOVA CLASSE UTILITÁRIA PARA BOTÕES 3D --- */
+.btn-3d {
+    position: relative;
+    top: 0;
+    font-weight: bold;
+    transition: all 0.1s ease-out;
+    padding: 12px 24px; /* Mais "gordo" */
+    font-size: 1.1rem;
+}
+
+.btn-3d.btn-submit {
+    box-shadow: 0 4px 0 0 var(--btn-primary-shadow);
+}
+
+.btn-3d.btn-secondary {
+    box-shadow: 0 4px 0 0 var(--btn-secondary-shadow);
+}
+
+.btn-3d:active {
+    top: 4px;
+    box-shadow: none;
+}

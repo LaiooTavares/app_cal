@@ -1,0 +1,305 @@
+/* FILE: frontend/src/views/settings/settings.css */
+.settings-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Adiciona espaço entre os cards */
+}
+
+.settings-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0; /* O gap do container já cuida do espaçamento */
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.settings-card {
+    background-color: var(--content-bg);
+    border-radius: var(--borda-arredondada, 12px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.settings-card.interactive {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.settings-card.interactive:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.card-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.icon-navigate {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.card-body .description {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+.current-timezone-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background-color: var(--main-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.current-timezone-display strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+#current-timezone-value {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: var(--main-bg); /* Fundo um pouco diferente para contraste */
+    cursor: grab;
+    transition: background-color 0.2s, box-shadow 0.2s, border-color 0.3s ease;
+}
+
+.status-item:active {
+    cursor: grabbing;
+    background-color: var(--sidebar-bg);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.status-item.dragging {
+    opacity: 0.5;
+}
+
+.drag-handle {
+    color: #ccc;
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+.status-color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid var(--content-bg);
+    box-shadow: 0 0 0 1px var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.status-name-display {
+    flex-grow: 1;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.status-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+    color: var(--text-secondary);
+}
+
+.status-actions button:hover {
+    background-color: rgba(144, 164, 174, 0.1);
+    color: var(--text-primary);
+}
+
+/* Estilos do Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--content-bg);
+    padding: 25px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.modal-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.form-group input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--main-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.form-group input[type="color"] {
+    height: 45px;
+    padding: 5px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ========================================= */
+/* ESTILOS DA SUB-PÁGINA DE FUSO HORÁRIO     */
+/* ========================================= */
+
+.timezone-page-container {
+    width: 100%;
+    animation: fadeIn 0.3s ease-out; /* Efeito de entrada suave */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.timezone-card-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s, border-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: var(--sidebar-bg);
+    color: var(--text-primary);
+}
+
+.timezone-card-header h2 {
+    font-size: 1.5rem;
+    margin: 0; /* Reset de margem */
+}
+
+.timezone-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.timezone-form-group label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.timezone-select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--main-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.timezone-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.timezone-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}

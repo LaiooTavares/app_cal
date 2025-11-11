@@ -1,0 +1,72 @@
+
+<div class="settings-container">
+    <h1>Configurações</h1>
+
+    <div id="settings-main-content">
+        <div class="settings-card">
+            <div class="card-header">
+                <h2>Personalizar Colunas do Kanban</h2>
+                <button id="add-status-btn" class="btn-submit">Adicionar Novo Status</button>
+            </div>
+            <div class="card-body">
+                <p class="description">Arraste os status para reordenar as colunas no seu quadro Kanban. O primeiro status da lista será o padrão para novos eventos.</p>
+                <div id="statuses-list-container">
+                    <p>A carregar status...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-card interactive" id="timezone-settings-card">
+            <div class="card-header">
+                <h2>Fuso Horário</h2>
+                <i class="fas fa-chevron-right icon-navigate"></i>
+            </div>
+            <div class="card-body">
+                <p class="description">Defina o fuso horário padrão para toda a aplicação para garantir a consistência de horários em agendamentos e disponibilidades.</p>
+                <div class="current-timezone-display">
+                    <strong>Fuso Horário Atual:</strong>
+                    <span id="current-timezone-value">Carregando...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-card">
+            <div class="card-header">
+                <h2>Tema</h2>
+            </div>
+            <div class="card-body">
+                <div class="theme-switcher">
+                    <label for="theme-select" class="description">Escolha uma aparência para o aplicativo.</label>
+                    <select id="theme-select">
+                        <option value="light">Claro</option>
+                        <option value="dark">Escuro</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings-subpage-container" class="hidden">
+    </div>
+</div>
+
+<div id="status-modal-overlay" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h3 id="modal-title">Adicionar Novo Status</h3>
+        <form id="status-form">
+            <input type="hidden" id="status-id">
+            <div class="form-group">
+                <label for="status-name">Nome do Status</label>
+                <input type="text" id="status-name" required maxlength="50">
+            </div>
+            <div class="form-group">
+                <label for="status-color">Cor</label>
+                <input type="color" id="status-color" value="#3498db">
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancel-status-btn" class="btn-secondary">Cancelar</button>
+                <button type="submit" class="btn-submit">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>

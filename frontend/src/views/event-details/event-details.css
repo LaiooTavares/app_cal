@@ -1,0 +1,144 @@
+/* FILE: frontend/src/views/event-details/event-details.css */
+#event-details-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: var(--main-bg);
+    color: var(--text-primary);
+}
+
+.details-card {
+    background-color: var(--content-bg);
+    border-radius: var(--borda-arredondada);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.card-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.header-actions .action-btn {
+    background-color: var(--main-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.header-actions .action-btn:hover {
+    background-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.header-actions .action-btn.delete:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-item .label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.detail-item .value {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.detail-item .value.notes {
+    white-space: pre-wrap;
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: var(--main-bg);
+    padding: 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.status-badge {
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-badge[data-status="a-fazer"] { background-color: #007bff; }
+.status-badge[data-status="em-andamento"] { background-color: #ffc107; color: #1f2937; }
+.status-badge[data-status="concluido"] { background-color: #28a745; }
+.status-badge[data-status="cancelado"] { background-color: #dc3545; }

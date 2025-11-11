@@ -1,0 +1,148 @@
+/* FILE: frontend/src/views/availability/exceptions.css */
+
+#exceptions-content {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.exceptions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.exceptions-header h3 {
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.exceptions-body {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+}
+
+.calendar-container-exceptions {
+    border: 1px solid var(--border-color);
+    border-radius: var(--borda-arredondada);
+    padding: 20px;
+    background-color: var(--main-bg);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header h4 {
+    margin: 0;
+    text-transform: capitalize;
+    color: var(--text-primary);
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    padding: 5px;
+}
+
+.calendar-grid-header, .calendar-grid-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    gap: 5px;
+}
+
+.calendar-grid-header div {
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.calendar-grid-days .calendar-day {
+    padding: 10px 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s;
+    color: var(--text-primary);
+    position: relative; /* Necessário para o ponto indicador */
+}
+
+.calendar-grid-days .calendar-day:hover {
+    background-color: var(--hover-bg);
+}
+
+.calendar-grid-days .calendar-day.selected {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+}
+
+.calendar-grid-days .calendar-day.has-exception {
+    border: 1px solid var(--accent-color, #ff9800); /* Cor para dias com exceção */
+    color: var(--accent-color, #ff9800);
+}
+
+/* --- ESTILO NOVO PARA O INDICADOR DE DIA DE TRABALHO --- */
+.calendar-grid-days .calendar-day.is-workday::after {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--primary-color-light, #7e9cff);
+}
+
+/* Oculta o ponto de dia de trabalho se o dia tiver uma exceção, para dar prioridade ao anel */
+.calendar-grid-days .calendar-day.is-workday.has-exception::after {
+    display: none;
+}
+
+/* Muda a cor do ponto para branco quando o dia está selecionado */
+.calendar-grid-days .calendar-day.is-workday.selected::after {
+    background-color: white;
+}
+/* --- FIM DO ESTILO NOVO --- */
+
+.date-details-container {
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--borda-arredondada);
+    background-color: var(--main-bg);
+}
+
+.date-details-container h4 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: var(--text-primary);
+}
+
+.day-block-toggle {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background-color: var(--content-bg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.day-block-toggle span {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+#exception-intervals-section .add-exception-interval-btn {
+    margin-top: 15px;
+    width: 100%;
+}

@@ -1,0 +1,38 @@
+/* Referência: src/css/integration.css */
+
+.integration-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.integration-container > h1 {
+    font-size: 2.5rem;
+    color: var(--calendar-text-primary);
+}
+
+.integration-container > p {
+    font-size: 1.1rem;
+    color: var(--calendar-text-secondary);
+    margin-top: -20px;
+    max-width: 800px;
+}
+
+.integration-card {
+    background-color: var(--cinza-fundo);
+    padding: 25px;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.integration-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: var(--calendar-text-primary);
+}
+
+.integration-card p {
+    font-size: 1rem;
+    color: var(--calendar-text-secondary);
+    margin-bottom: 25px;
+}

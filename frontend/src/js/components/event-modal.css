@@ -1,0 +1,174 @@
+/* FILE: frontend/src/css/components/event-modal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    /* Transição de visibilidade agora é instantânea ao esconder */
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+/* NOVO ESTILO: Regra para quando o modal está visível */
+.modal-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+    /* Transição de visibilidade é instantânea ao mostrar */
+    transition: opacity 0.3s ease, visibility 0s 0s;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+/* NOVO ESTILO: Animação de escala quando o modal está visível */
+.modal-overlay.is-visible .modal-content {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+    color: #333;
+}
+
+.modal-header .action-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #777;
+    cursor: pointer;
+}
+
+#global-event-form .form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+#global-event-form .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+#global-event-form label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #777;
+}
+
+#global-event-form input,
+#global-event-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #fff;
+}
+
+#global-event-form .time-display-box {
+    background-color: #f0f2f5;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    color: #777;
+    text-align: center;
+    font-weight: 500;
+}
+
+#global-event-form .form-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+#global-event-form #open-booking-tool-btn,
+#global-event-form .form-actions button {
+    position: relative;
+    top: 0;
+    font-weight: bold;
+    color: var(--btn-text-color, #fff);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+}
+
+#global-event-form #open-booking-tool-btn {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    background: linear-gradient(180deg, var(--btn-primary-bg, #007bff) 0%, var(--btn-primary-shadow, #0056b3) 100%);
+    box-shadow: 0 4px 0 0 var(--btn-primary-shadow, #0056b3);
+}
+
+#global-event-form #open-booking-tool-btn:hover:not(:disabled) {
+    background: linear-gradient(180deg, var(--btn-primary-bg-hover, #0069d9) 0%, var(--btn-primary-bg, #007bff) 100%);
+    box-shadow: 0 2px 0 0 var(--btn-primary-shadow-hover, #004d9c);
+    top: 2px;
+}
+
+#global-event-form #open-booking-tool-btn:active:not(:disabled) {
+    background: var(--btn-primary-shadow, #0056b3);
+    box-shadow: 0 0px 0 0 var(--btn-primary-shadow, #0056b3);
+    top: 4px;
+}
+
+#global-event-form #open-booking-tool-btn:disabled {
+    color: var(--btn-disabled-text, #666);
+    background: linear-gradient(180deg, var(--btn-disabled-bg-top, #ccc) 0%, var(--btn-disabled-bg-bottom, #aaa) 100%);
+    box-shadow: 0 4px 0 0 var(--btn-disabled-shadow, #888);
+    cursor: not-allowed;
+    top: 0;
+}
+
+#global-event-form .form-actions button {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+}
+
+#global-event-form .form-actions button:active {
+    top: 4px;
+}
+
+#global-event-form .btn-submit {
+    background-color: var(--btn-primary-bg, #007bff);
+    box-shadow: 0 4px 0 0 var(--btn-primary-shadow, #0056b3);
+}
+
+#global-event-form .btn-submit:active {
+    box-shadow: 0 0px 0 0 var(--btn-primary-shadow, #0056b3);
+}
+
+#global-event-form .btn-secondary {
+    background-color: var(--btn-secondary-bg, #6c757d);
+    box-shadow: 0 4px 0 0 var(--btn-secondary-shadow, #545b62);
+}
+
+#global-event-form .btn-secondary:active {
+    box-shadow: 0 0px 0 0 var(--btn-secondary-shadow, #545b62);
+}

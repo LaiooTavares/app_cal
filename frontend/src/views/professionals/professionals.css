@@ -1,0 +1,329 @@
+/* FILE: frontend/src/views/professionals/professionals.css */
+.professionals-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.professionals-form-container,
+.professionals-list-container {
+    background-color: var(--content-bg);
+    padding: 25px;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.professionals-form-container h2,
+.professionals-list-container h2 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.professionals-list-container .view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+#professional-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+#professional-form label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+#professional-form small {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+#professional-form input,
+#professional-form textarea {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--main-bg);
+    color: var(--text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s ease, color 0.3s ease;
+}
+
+#professional-form input:focus,
+#professional-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(54, 123, 245, 0.2);
+}
+
+#professional-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* --- ESTILOS PARA O SELETOR DE CORES --- */
+.color-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0 0 0 8px;
+    background-color: var(--main-bg);
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s ease;
+}
+
+.color-input-wrapper:focus-within {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(54, 123, 245, 0.2);
+}
+
+#professional-color {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#professional-color::-webkit-color-swatch {
+    border-radius: 6px;
+    border: none;
+}
+
+#professional-color::-moz-color-swatch {
+    border-radius: 6px;
+    border: none;
+}
+
+#professional-color-text {
+    border: none;
+    padding: 12px 10px;
+    font-size: 1rem;
+    outline: none;
+    width: 100%;
+    background-color: transparent;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+/* Botões reaproveitados em outros lugares, mas com estilo base aqui */
+.btn-submit {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.btn-submit:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background-color: var(--text-secondary);
+    color: var(--content-bg);
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btn-secondary:hover {
+    opacity: 0.9;
+}
+
+
+/* LISTA DE PROFISSIONAIS */
+.professionals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.professional-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    align-items: center;
+    padding: 20px;
+    gap: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--main-bg);
+    transition: box-shadow 0.2s, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.professional-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.professional-card-info strong {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.professional-card-info span {
+    font-size: 1rem;
+    color: var(--text-primary);
+    word-break: break-all;
+    transition: color 0.3s ease;
+}
+
+.professional-card-actions {
+    display: flex;
+    gap: 10px;
+    justify-self: end;
+}
+
+.name-with-swatch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.color-swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid var(--content-bg);
+    box-shadow: 0 0 0 1px var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 5px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.action-btn.edit { color: var(--primary-color); }
+.action-btn.delete { color: #dc3545; }
+.action-btn:hover { background-color: rgba(144, 164, 174, 0.1); }
+
+#no-professionals-message {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+.form-group-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--primary-color);
+}
+
+.form-group-checkbox label {
+    margin: 0;
+    font-weight: normal;
+}
+
+/* ============== SEÇÃO DE INTEGRAÇÃO ============== */
+
+.form-section {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+}
+
+.section-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.input-with-button {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-with-button input {
+    flex-grow: 1;
+}
+
+.input-with-button button {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.google-linked-icon {
+    color: #4285F4;
+    font-size: 1rem;
+    margin-left: 5px;
+}

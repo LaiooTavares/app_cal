@@ -1,0 +1,210 @@
+/* FILE: frontend/src/views/integrations/integrations.css */
+
+/* --- LAYOUT GERAL E CABEÇALHO --- */
+.integrations-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.integrations-header h1 {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.integrations-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    transition: color 0.3s ease;
+}
+
+/* --- SISTEMA DE ABAS (TABS) --- */
+.tabs-container {
+    background-color: var(--content-bg);
+    border-radius: var(--borda-arredondada, 12px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.tabs-nav {
+    display: flex;
+    background-color: var(--main-bg);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.tab-link {
+    background: none;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.tab-link:hover {
+    background-color: var(--content-bg);
+    color: var(--text-primary);
+}
+
+.tab-link.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    background-color: var(--content-bg);
+}
+
+.tab-content {
+    padding: 30px;
+}
+
+/* --- CARD DE CONTEÚDO E TEXTOS --- */
+.integration-card {
+    background: var(--main-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.integration-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.integration-card p, .warning-text {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    max-width: 600px;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+.warning-text {
+    margin-top: 15px !important;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* --- ESTILO NEUMÓRFICO (ADAPTADO PARA TEMAS) --- */
+.neumorphic-group {
+    background: var(--main-bg);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 5px 5px 10px var(--neumorphic-shadow-dark), 
+                -5px -5px 10px var(--neumorphic-shadow-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inset-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1.1rem;
+    padding: 12px;
+    border-radius: 8px;
+    color: var(--text-primary);
+    box-shadow: inset 3px 3px 6px var(--neumorphic-shadow-dark), 
+                inset -3px -3px 6px var(--neumorphic-shadow-light);
+    transition: color 0.3s ease, box-shadow 0.3s ease;
+}
+.inset-input.monospace {
+    font-family: 'Courier New', Courier, monospace;
+}
+.inset-input::placeholder {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+/* --- BOTÕES 3D (USAM VARIÁVEIS GLOBAIS) --- */
+.btn-3d {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--btn-text-color);
+    cursor: pointer;
+    position: relative;
+    top: 0;
+    transition: all 0.1s ease-in-out;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+.btn-3d.btn-submit {
+    background-color: var(--btn-primary-bg);
+    box-shadow: 0px 5px 0px 0px var(--btn-primary-shadow);
+}
+.btn-3d.btn-submit:hover { filter: brightness(1.1); }
+.btn-3d.btn-submit:active { top: 5px; box-shadow: none; }
+
+.btn-3d.btn-secondary {
+    background-color: var(--btn-secondary-bg);
+    box-shadow: 0px 5px 0px 0px var(--btn-secondary-shadow);
+}
+.btn-3d.btn-secondary:hover { filter: brightness(1.1); }
+.btn-3d.btn-secondary:active { top: 5px; box-shadow: none; }
+
+
+/* --- FORMULÁRIOS E GRUPOS --- */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    padding-left: 5px;
+    transition: color 0.3s ease;
+}
+
+.form-group-checkbox {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+.form-group-checkbox label { margin: 0; }
+.form-group-checkbox input[type="checkbox"] { accent-color: var(--primary-color); }
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+#confirm-new-key-btn {
+    margin: 15px auto 0 auto;
+    width: 100%;
+    max-width: 200px;
+}
+
+/* --- Aba Webhook --- */
+#webhook-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

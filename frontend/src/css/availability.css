@@ -1,0 +1,169 @@
+/* FILE: frontend/src/css/availability.css */
+
+.availability-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- SELETOR DE PROFISSIONAIS --- */
+
+.professional-selector-container h2,
+.availability-schedule-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.professionals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.professional-select-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: var(--borda-arredondada);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    text-align: center;
+}
+
+.professional-select-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.07);
+    border-color: var(--primary-color);
+}
+
+.professional-select-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.professional-select-card h3 {
+    margin-bottom: 5px;
+    color: var(--text-primary);
+}
+
+.professional-select-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* --- GRADE DE DISPONIBILIDADE --- */
+
+.availability-schedule-container {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+.schedule-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.back-to-professionals-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.back-to-professionals-btn:hover {
+    background-color: #f0f0f0;
+    color: var(--text-primary);
+}
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.day-schedule {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.day-header h4 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.add-interval-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.time-intervals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.time-interval {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.time-interval span {
+    font-weight: 500;
+}
+
+.delete-interval-btn {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.add-interval-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.add-interval-form input[type="time"] {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}

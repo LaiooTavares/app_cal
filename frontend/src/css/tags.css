@@ -1,0 +1,116 @@
+/* Referência: src/css/tags.css */
+
+.tag-manager-container {
+    background-color: var(--cinza-fundo);
+    padding: 25px;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tag-manager-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.tag-manager-container p {
+    font-size: 1rem;
+    color: var(--calendar-text-secondary);
+    margin-bottom: 25px;
+}
+
+.create-tag-form {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--calendar-border);
+}
+
+.create-tag-form input[type="text"] {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid var(--calendar-border);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-picker-wrapper label {
+    font-weight: bold;
+    color: #555;
+}
+
+.create-tag-form input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.create-tag-form input[type="color"]::-webkit-color-swatch {
+    border-radius: 50%;
+    border: 2px solid var(--calendar-border);
+}
+.create-tag-form input[type="color"]::-moz-color-swatch {
+    border-radius: 50%;
+    border: 2px solid var(--calendar-border);
+}
+
+.create-tag-form button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tag-list-header {
+    margin-bottom: 15px;
+}
+
+.tag-list-header h3 {
+    font-size: 1.2rem;
+    color: var(--calendar-text-primary);
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.tag-item {
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s;
+    user-select: none; /* Impede a seleção de texto ao arrastar */
+}
+
+.tag-item:active {
+    cursor: grabbing;
+}
+
+.tag-item.is-dragging {
+    opacity: 0.5;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+}

@@ -1,0 +1,60 @@
+/* FILE: frontend/src/views/settings/timezone.css */
+#timezone-settings-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.settings-header h3 {
+    margin: 0;
+}
+
+.settings-card {
+    background-color: var(--content-bg);
+    padding: 30px;
+    border-radius: var(--borda-arredondada);
+    border: 1px solid var(--border-color);
+}
+
+.settings-description {
+    color: var(--text-secondary);
+    margin-top: 0;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group .form-control {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--main-bg);
+    color: var(--text-primary);
+}
+
+.settings-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    text-align: right;
+}

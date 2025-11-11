@@ -1,0 +1,152 @@
+/* FILE: frontend/src/views/integrations/api.css */
+
+/* Define um fundo para o card, essencial para o efeito de relevo */
+#api-content {
+    background: #f0f2f5; /* Um cinza muito claro, pode ser var(--main-bg) se preferir */
+}
+
+.api-key-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.api-key-wrapper label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    padding-left: 5px;
+}
+
+/* Caixa com efeito de "alto relevo" (Neumorfismo) */
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f0f2f5;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 5px 5px 10px #d9dbe0, 
+                -5px -5px 10px #ffffff;
+}
+
+/* Input com efeito "pressionado" (inset) */
+.input-group input[type="text"] {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background: #f0f2f5;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1rem;
+    padding: 12px;
+    border-radius: 8px;
+    color: var(--text-primary);
+    box-shadow: inset 3px 3px 6px #d9dbe0, 
+                inset -3px -3px 6px #ffffff;
+}
+
+/* --- ESTILOS PARA BOTÕES 3D --- */
+
+/* Classe base para o efeito 3D */
+.btn-3d {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    top: 0;
+    transition: all 0.1s ease-in-out;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+/* Botão 3D Primário (Submit) */
+.btn-3d.btn-submit {
+    background-color: var(--primary-color, #007bff);
+    /* A sombra escura cria a profundidade */
+    box-shadow: 0px 5px 0px 0px #0056b3; 
+}
+
+.btn-3d.btn-submit:hover {
+    filter: brightness(1.1);
+}
+
+.btn-3d.btn-submit:active {
+    /* Ao clicar, move o botão para baixo e remove a sombra */
+    top: 5px;
+    box-shadow: 0px 0px 0px 0px #0056b3;
+}
+
+/* Botão 3D Secundário */
+.btn-3d.btn-secondary {
+    background-color: #6c757d;
+    box-shadow: 0px 5px 0px 0px #495057;
+}
+
+.btn-3d.btn-secondary:hover {
+    filter: brightness(1.1);
+}
+
+.btn-3d.btn-secondary:active {
+    top: 5px;
+    box-shadow: 0px 0px 0px 0px #495057;
+}
+
+
+/* Ajustes de espaçamento e tipografia */
+.warning-text {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 15px !important;
+    text-align: center;
+}
+
+#confirm-new-key-btn {
+    margin: 15px auto 0 auto; /* Centraliza o botão 'Entendido' */
+    width: 100%;
+    max-width: 200px;
+}
+/* FILE: frontend/src/views/integrations/api.css */
+
+.api-key-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.api-key-wrapper label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    padding-left: 5px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-group input[type="text"] {
+    flex-grow: 1;
+    font-size: 1rem;
+    font-family: monospace;
+}
+
+.input-group button {
+    flex-shrink: 0;
+}
+
+.warning-text {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 15px !important;
+    text-align: center;
+}
+
+#confirm-new-key-btn {
+    margin: 15px auto 0 auto;
+    width: 100%;
+    max-width: 200px;
+}

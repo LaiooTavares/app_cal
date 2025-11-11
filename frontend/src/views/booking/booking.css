@@ -1,0 +1,180 @@
+/* FILE: frontend/src/views/booking/booking.css */
+#booking-tool-content { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 28px;
+    padding: 14px;
+}
+
+#booking-tool-content .booking-header { 
+    padding-bottom: 21px;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+#booking-tool-content .booking-header h3 {
+    font-size: 1.68rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+#booking-tool-content .booking-wrapper { 
+    display: grid; 
+    grid-template-columns: 1fr;
+    gap: 42px;
+}
+
+/* Em telas maiores, divide em duas colunas */
+@media (min-width: 768px) {
+    #booking-tool-content .booking-wrapper {
+        grid-template-columns: 1fr 420px;
+    }
+}
+
+#booking-tool-content .calendar-container { 
+    padding: 0; 
+}
+
+#booking-tool-content .calendar-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 28px;
+}
+
+#booking-tool-content .calendar-header h3 { 
+    font-size: 1.54rem; 
+    text-transform: capitalize;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+#booking-tool-content .calendar-header button { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#booking-tool-content .calendar-header button:hover {
+    background-color: var(--main-bg);
+}
+
+#booking-tool-content .calendar-grid { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 7px;
+    text-align: center; 
+}
+
+#booking-tool-content .calendar-grid .day-name { 
+    font-weight: 600; 
+    font-size: 1.12rem;
+    color: var(--text-secondary); 
+    padding: 14px 0;
+    transition: color 0.3s ease;
+}
+
+#booking-tool-content .day-cell { 
+    padding: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 54px;
+}
+
+#booking-tool-content .day-number { 
+    width: 48px;
+    height: 48px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border-radius: 50%; 
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    font-size: 1.26rem;
+    border: 1px solid transparent;
+    color: var(--text-primary); /* Garante que os números normais fiquem visíveis */
+}
+
+#booking-tool-content .day-number.other-month { 
+    color: var(--text-secondary); 
+    opacity: 0.3; 
+    cursor: default;
+}
+
+#booking-tool-content .day-number.has-availability { 
+    font-weight: bold; 
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+#booking-tool-content .day-number.has-availability:hover { 
+    background-color: var(--main-bg);
+    border-color: var(--primary-color);
+}
+
+#booking-tool-content .day-number.selected { 
+    background-color: var(--primary-color); 
+    color: white;
+    font-weight: bold;
+    border-color: var(--primary-color);
+}
+
+#booking-tool-content .slots-container { 
+    padding: 0; 
+}
+
+#booking-tool-content .slots-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding-bottom: 21px;
+    margin-bottom: 21px;
+    border-bottom: 1px solid var(--border-color); 
+    transition: border-color 0.3s ease;
+}
+
+#booking-tool-content .slots-header h3 {
+    font-size: 1.54rem;
+    text-transform: capitalize;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+#booking-tool-content .slots-list { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(126px, 1fr));
+    gap: 14px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 7px;
+}
+
+#booking-tool-content .slot-btn { 
+    padding: 14px;
+    border: 1px solid var(--primary-color); 
+    color: var(--primary-color); 
+    background-color: transparent; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    text-align: center; 
+    transition: background-color 0.2s, color 0.2s;
+    font-size: 1.2rem;
+}
+
+#booking-tool-content .slot-btn:hover,
+#booking-tool-content .slot-btn:focus { 
+    background-color: var(--primary-color); 
+    color: white; 
+    outline: none;
+}

@@ -1,0 +1,185 @@
+/* FILE: frontend/src/views/calendar/calendar.css */
+
+/* --- Garante que a view do calendário aproveite o espaço vertical --- */
+#calendar-view {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-wrapper { 
+    width: 100%; 
+    padding: 20px; 
+    background-color: var(--calendar-bg); 
+    border-radius: var(--borda-arredondada); 
+    transition: background-color 0.3s ease;
+}
+
+.calendar-new-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 2rem; 
+}
+
+.header-left h1 { 
+    font-size: 2.5rem; 
+    color: var(--text-secondary); 
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.header-center { 
+    display: flex; 
+    align-items: center; 
+    gap: 1.5rem; 
+}
+
+.header-center h2 { 
+    font-size: 2rem; 
+    font-weight: bold; 
+    color: var(--text-primary); 
+    min-width: 200px; 
+    text-align: center; 
+    text-transform: capitalize;
+    transition: color 0.3s ease;
+}
+
+.nav-btn-new { 
+    background-color: var(--main-bg); 
+    color: var(--text-secondary); 
+    border: none; 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    cursor: pointer; 
+    transition: transform 0.2s, background-color 0.3s, color 0.3s; 
+}
+
+.nav-btn-new:hover { 
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1); 
+}
+
+.calendar-grid-new, .calendar-days-new { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 10px; 
+}
+
+.day-of-week-new { 
+    background-color: transparent; 
+    color: var(--text-secondary); 
+    font-weight: bold; 
+    text-align: center; 
+    padding: 12px 0; 
+    border-radius: 10px; 
+    transition: color 0.3s ease;
+}
+
+.calendar-days-new { 
+    margin-top: 10px; 
+
+    /* --- [INÍCIO DA CORREÇÃO DEFINITIVA] --- */
+    /* 1. Força que CADA LINHA da grade tenha exatamente 120px de altura. */
+    /* Isso impede que a linha cresça se o conteúdo de um dia for maior. */
+    grid-auto-rows: 120px;
+    /* --- [FIM DA CORREÇÃO DEFINITIVA] --- */
+}
+
+.day { 
+    background-color: var(--content-bg); 
+    border: 1px solid var(--border-color); 
+    border-radius: 10px; 
+    
+    /* --- [INÍCIO DA CORREÇÃO DEFINITIVA] --- */
+    /* 2. Removemos o min-height que permitia o crescimento. */
+    /* A altura agora é controlada pelo 'grid-auto-rows' do container. */
+    /* min-height: 120px; <-- REMOVIDO */
+    /* --- [FIM DA CORREÇÃO DEFINITIVA] --- */
+
+    padding: 10px; 
+    color: var(--text-primary); 
+    transition: box-shadow 0.3s, transform 0.2s, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+    /* [NOVO] Adicionado para garantir que o flexbox não ultrapasse a altura do grid */
+    overflow: hidden; 
+}
+
+.day.current-month {
+    cursor: pointer;
+}
+
+.day.current-month:hover { 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    transform: translateY(-3px); 
+    border-color: var(--primary-color);
+}
+
+.day.prev-month, .day.next-month { 
+    color: var(--calendar-text-secondary); 
+    background-color: transparent; 
+    border: 1px solid transparent; 
+}
+
+.day-number { 
+    font-weight: bold; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 30px; 
+    height: 30px;
+    transition: all 0.2s;
+    align-self: flex-start;
+    margin-bottom: 4px;
+    flex-shrink: 0; 
+}
+
+.day-number.today { 
+    background-color: var(--primary-color); 
+    color: white; 
+    border-radius: 50%; 
+}
+
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1; /* Ocupa o espaço restante DENTRO do bloco */
+    overflow-y: auto; /* Cria scroll DENTRO do bloco */
+}
+
+.event-bar {
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.event-bar .event-time {
+    font-weight: 700;
+}
+
+.more-events-indicator {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding-left: 6px;
+    margin-top: 2px;
+}
+
+/* TODOS OS ESTILOS DA TIMELINE FORAM REMOVIDOS DESTE PONTO EM DIANTE */

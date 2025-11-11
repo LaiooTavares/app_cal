@@ -1,0 +1,187 @@
+/* Referência: src/css/users.css */
+
+.users-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.users-container h1 {
+    font-size: 2.5rem;
+    color: var(--calendar-text-primary);
+}
+
+.users-card {
+    background-color: var(--cinza-fundo);
+    padding: 25px;
+    border-radius: var(--borda-arredondada);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.users-card h2, .users-card h3 {
+    font-size: 1.8rem;
+    color: var(--calendar-text-primary);
+}
+
+.users-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.users-card .card-header {
+    border-bottom: 1px solid var(--calendar-border);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.users-card p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+    max-width: 700px;
+}
+
+.users-card .form-group {
+    margin-bottom: 20px;
+}
+
+.users-card .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.users-card input[type="text"],
+.users-card input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--calendar-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--cinza-fraco);
+}
+
+.users-card .form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+/* --- ESTILOS PARA GERENCIAMENTO DE CLIENTES --- */
+.client-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.client-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 20px;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--cinza-fraco);
+    border-radius: 8px;
+    border-left: 4px solid #3498db; /* Azul para Clientes */
+}
+
+.client-info strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--calendar-text-primary);
+}
+
+.client-info span {
+    font-size: 0.9rem;
+    color: var(--calendar-text-secondary);
+}
+
+.client-collaborators-count {
+    font-size: 0.9rem;
+    font-weight: bold;
+    background-color: #e9ecef;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+.client-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-manage {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: #c0392b;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.btn-secondary {
+    background-color: var(--cinza-fraco);
+    color: var(--calendar-text-primary);
+    border: 1px solid var(--calendar-border);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.add-client-form {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid var(--calendar-border);
+    margin-bottom: 20px;
+}
+
+/* --- ESTILOS PARA GERENCIAMENTO DE COLABORADORES --- */
+#collaborators-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#collaborator-counter {
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: var(--cinza-fraco);
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+.collaborator-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+.collaborator-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--cinza-fraco);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+.add-collaborator-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: var(--cinza-fraco);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}

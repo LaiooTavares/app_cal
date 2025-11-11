@@ -1,0 +1,22 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.2.11",
+    "vite-plugin-pwa": "^1.1.0"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.8.1",
+    "toastify-js": "^1.12.0"
+  }
+}

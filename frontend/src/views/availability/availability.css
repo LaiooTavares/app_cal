@@ -1,0 +1,257 @@
+/* FILE: frontend/src/views/availability/availability.css */
+
+/* --- ESTILOS GERAIS DA VIEW --- */
+.availability-wrapper {
+    max-width: 900px;
+    margin: 0 auto; /* Removido margin-top para consistência */
+    background-color: var(--content-bg);
+    padding: 30px;
+    border-radius: var(--borda-arredondada);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* --- SELETOR DE PROFISSIONAL (NO TOPO) --- */
+.availability-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.availability-header label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.availability-header select {
+    flex: 1;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--main-bg);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* --- MODO DE VISUALIZAÇÃO (READ-ONLY) --- */
+.readonly-schedule-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: flex-start;
+    padding: 18px 10px;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.readonly-schedule-row:last-child {
+    border-bottom: none;
+}
+
+.readonly-day-name {
+    font-weight: 500;
+    text-transform: capitalize;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.readonly-day-times {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.readonly-day-times.unavailable {
+    font-style: italic;
+}
+
+/* --- RODAPÉ --- */
+.availability-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.timezone-info, .time-format-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.time-format-selector label {
+    cursor: pointer;
+}
+
+.time-format-selector input {
+    margin-right: 5px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.edit-availability-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+}
+
+.edit-availability-btn i {
+    font-size: 0.8rem;
+}
+
+/* --- MODO DE EDIÇÃO (LAYOUT COM TOGGLES) --- */
+.day-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px 10px;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.day-row:last-child {
+    border-bottom: none;
+}
+
+.day-label {
+    flex: 0 0 150px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-top: 5px;
+    transition: color 0.3s ease;
+}
+
+.intervals-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.intervals-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.interval-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.interval-row span {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.interval-row input[type="time"] {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--main-bg);
+    color: var(--text-primary);
+    width: 120px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.interval-row .action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+.interval-row .delete-interval-btn:hover {
+    color: #dc3545;
+}
+
+.interval-row .add-interval-btn:hover {
+    color: var(--primary-color);
+}
+
+.no-intervals-message {
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 10px 0;
+    transition: color 0.3s ease;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+.time-format-display {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    font-style: italic;
+    margin-left: 8px;
+    transition: color 0.3s ease;
+}
