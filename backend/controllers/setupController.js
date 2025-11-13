@@ -28,13 +28,25 @@ const getSetupStatus = (pool) => async (req, res) => {
  */
 const createDevUser = (pool) => async (req, res) => {
     const { name, email, password, defaultPassword } = req.body;
-    const masterPassword = 'Cal-2025';
+    
+    // --- ALTERAÇÃO APLICADA AQUI ---
+    // A senha mestre agora é lida das variáveis de ambiente.
+    // Ela DEVE ser configurada no .env (local) ou no painel (produção).
+    const masterPassword = process.env.SETUP_MASTER_PASSWORD;
+
+    // Verificação de segurança: Se a variável de ambiente não estiver definida no servidor,
+    // a aplicação não deve permitir a criação do usuário.
+    if (!masterPassword) {
+        console.error('[SETUP] ERRO CRÍTICO: A variável de ambiente SETUP_MASTER_PASSWORD não está configurada.');
+        // Retorna uma mensagem genérica ao usuário, mas loga o erro real no servidor.
+        return res.status(500).json({ message: 'Erro de configuração interna do servidor.' });
+    }
+    // --- FIM DA ALTERAÇÃO ---
 
     if (!name || !email || !password || !defaultPassword) {
         return res.status(400).json({ message: 'Todos os campos são obrigatórios: nome, e-mail, nova senha e a senha padrão.' });
     }
 
-    // --- ALTERAÇÃO APLICADA AQUI ---
     // Converte para String (para garantir) e usa .trim() para remover 
     // espaços em branco no início ou no fim da senha digitada.
     const trimmedDefaultPassword = String(defaultPassword).trim();
@@ -43,11 +55,11 @@ const createDevUser = (pool) => async (req, res) => {
         // Adiciona um log no servidor para depuração.
         // Se o erro continuar, verifique os logs do backend no Easypanel.
         console.warn(`[SETUP] Tentativa de setup com senha mestre incorreta.`);
-        console.warn(`[SETUP] Esperado: '${masterPassword}' | Recebido: '${defaultPassword}'`);
+        // Nota: Não logamos mais a senha esperada (masterPassword) por razões de segurança.
+        console.warn(`[SETUP] Recebido: '${defaultPassword}'`);
         
         return res.status(403).json({ message: 'A senha padrão informada está incorreta.' });
     }
-    // --- FIM DA ALTERAÇÃO ---
     
     try {
         const devCheckQuery = `SELECT COUNT(*) FROM users WHERE LOWER(role) IN ('dev', 'developer', 'admin', 'administrator')`;
