@@ -1095,5 +1095,5 @@ app.post('/api/kanban/statuses/reorder', authenticateRequest, async (req, res) =
 // --- [INÍCIO DA MODIFICAÇÃO (Socket.IO)] ---
 // 6. Iniciar o servidor HTTP (que contém o app Express e o Socket.IO)
 server.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando na porta ${PORT}`);
+    console.log(`🚀 Servidor rodando na porta ${PORT}🚀`);
 });

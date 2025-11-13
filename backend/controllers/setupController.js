@@ -27,22 +27,21 @@ const getSetupStatus = (pool) => async (req, res) => {
  * Protegido pela senha padrão que só funciona uma vez.
  */
 const createDevUser = (pool) => async (req, res) => {
+    
+    // --- ALTERAÇÃO DE TESTE (1) ---
+    // Este log DEVE aparecer no Easypanel se o novo código estiver rodando.
+    console.log('[SETUP DEBUG] ROTA /api/setup/create-dev-user FOI ACIONADA.');
+    // --- FIM DA ALTERAÇÃO ---
+
     const { name, email, password, defaultPassword } = req.body;
     
-    // --- ALTERAÇÃO APLICADA AQUI (LOG DE DEPURAÇÃO) ---
-    // A senha mestre agora é lida das variáveis de ambiente.
     const masterPassword = process.env.SETUP_MASTER_PASSWORD;
 
     // Log de depuração temporário:
-    // Verifique os logs do seu backend no Easypanel após reiniciar.
     console.log(`[SETUP DEBUG] Variável de ambiente lida pelo processo: '${masterPassword}'`);
-    // --- FIM DA ALTERAÇÃO ---
 
-    // Verificação de segurança: Se a variável de ambiente não estiver definida no servidor,
-    // a aplicação não deve permitir a criação do usuário.
     if (!masterPassword) {
         console.error('[SETUP] ERRO CRÍTICO: A variável de ambiente SETUP_MASTER_PASSWORD não está configurada.');
-        // Retorna uma mensagem genérica ao usuário, mas loga o erro real no servidor.
         return res.status(500).json({ message: 'Erro de configuração interna do servidor.' });
     }
 
@@ -50,17 +49,16 @@ const createDevUser = (pool) => async (req, res) => {
         return res.status(400).json({ message: 'Todos os campos são obrigatórios: nome, e-mail, nova senha e a senha padrão.' });
     }
 
-    // Converte para String (para garantir) e usa .trim() para remover 
-    // espaços em branco no início ou no fim da senha digitada.
     const trimmedDefaultPassword = String(defaultPassword).trim();
 
     if (trimmedDefaultPassword !== masterPassword) {
-        // Adiciona um log no servidor para depuração.
         console.warn(`[SETUP] Tentativa de setup com senha mestre incorreta.`);
-        // Nota: Não logamos mais a senha esperada (masterPassword) por razões de segurança.
         console.warn(`[SETUP] Recebido: '${defaultPassword}'`);
         
-        return res.status(403).json({ message: 'A senha padrão informada está incorreta.' });
+        // --- ALTERAÇÃO DE TESTE (2) ---
+        // Mudamos a mensagem de erro para provar que o código novo está rodando.
+        return res.status(403).json({ message: 'TESTE-DEPLOY: Senha inválida.' });
+        // --- FIM DA ALTERAÇÃO ---
     }
     
     try {
