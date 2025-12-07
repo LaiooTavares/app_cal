@@ -555,15 +555,34 @@ app.post('/api/kanban/statuses/reorder', authenticateRequest, async (req, res) =
 });
 
 // =================================================================
-// --- INICIALIZAÇÃO DO SERVIDOR COM DIAGNÓSTICO ---
+// --- INICIALIZAÇÃO DO SERVIDOR COM DIAGNÓSTICO E RESET ---
 // =================================================================
+
+// --- ROTA DE EMERGÊNCIA PARA LIMPAR O BANCO ---
+// Adicionada para permitir o reset total quando o banco não está acessível via PgAdmin
+app.get('/api/emergency-reset', async (req, res) => {
+    try {
+        console.log('--- INICIANDO LIMPEZA DE EMERGÊNCIA ---');
+        await pool.query('TRUNCATE TABLE users RESTART IDENTITY CASCADE');
+        console.log('--- BANCO DE DADOS ZERADO ---');
+        res.status(200).send(`
+            <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+                <h1 style="color: green;">BANCO DE DADOS ZERADO COM SUCESSO!</h1>
+                <p>Todos os usuários e dados relacionados foram apagados.</p>
+                <p>Agora você pode acessar <a href="/setup.html">/setup.html</a> para criar o administrador.</p>
+            </div>
+        `);
+    } catch (error) {
+        console.error('Erro ao limpar banco:', error);
+        res.status(500).send('Erro ao limpar: ' + error.message);
+    }
+});
 
 // 6. Iniciar o servidor HTTP
 server.listen(PORT, () => {
     console.log(`✏️ Servidor rodando na porta ${PORT} ✏️`);
     
     // --- [NOVO] DIAGNÓSTICO DE SENHA MESTRA AO INICIAR ---
-    // Isso vai aparecer no log assim que o container subir, sem precisar clicar no botão.
     const setupPass = process.env.SETUP_MASTER_PASSWORD;
     console.log('--- [DIAGNÓSTICO DE VARIÁVEIS] ---');
     if (!setupPass) {
@@ -572,7 +591,7 @@ server.listen(PORT, () => {
         console.log(`✅ SETUP_MASTER_PASSWORD detectada.`);
         console.log(`   --> Tipo: ${typeof setupPass}`);
         console.log(`   --> Tamanho: ${setupPass.length} caracteres`);
-        // Mostra o primeiro e o último caractere para confirmar se há espaços
+        
         const firstChar = setupPass.charAt(0);
         const lastChar = setupPass.charAt(setupPass.length - 1);
         console.log(`   --> Inicia com: "${firstChar}"`);
