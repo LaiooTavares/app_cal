@@ -1,4 +1,4 @@
-// Referência: frontend/vite.config.js
+// ARQUIVO: frontend/vite.config.js
 import { defineConfig } from 'vite';
 import path from 'path';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -55,34 +55,20 @@ export default defineConfig({
     plugins: [
         devServerRewritePlugin,
         VitePWA({
-            // --- [MUDANÇA CRÍTICA] ---
-            // selfDestroying: true força o navegador a apagar o Service Worker antigo imediatamente.
-            // Isso remove o cache corrompido que está causando o erro de Mixed Content.
+            // --- [MODO DE AUTODESTRUIÇÃO] ---
+            // Isso força o navegador a DELETAR qualquer Service Worker antigo imediatamente.
             selfDestroying: true, 
-            // -------------------------
+            // -------------------------------
             
             registerType: 'autoUpdate',
             includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', 'icon-192.png', 'icon-512.png'],
             manifest: {
                 name: 'LaiCal - Agenda Inteligente',
                 short_name: 'LaiCal',
-                description: 'Gerencie seus eventos e agenda com facilidade.',
                 theme_color: '#1A202C',
-                background_color: '#1A202C',
-                display: 'standalone',
-                start_url: '/',
-                scope: '/',
                 icons: [
-                    {
-                        src: 'icon-192.png',
-                        sizes: '192x192',
-                        type: 'image/png'
-                    },
-                    {
-                        src: 'icon-512.png',
-                        sizes: '512x512',
-                        type: 'image/png'
-                    }
+                    { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+                    { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
                 ]
             }
         })
