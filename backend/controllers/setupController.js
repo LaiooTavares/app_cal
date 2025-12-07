@@ -8,7 +8,6 @@ const crypto = require('crypto');
  */
 const getSetupStatus = (pool) => async (req, res) => {
     try {
-        // A consulta agora verifica por múltiplos nomes de roles em minúsculas para ser mais robusta.
         const devCheckQuery = `SELECT COUNT(*) FROM users WHERE LOWER(role) IN ('dev', 'developer', 'admin', 'administrator')`;
         const { rows } = await pool.query(devCheckQuery);
         
@@ -27,40 +26,52 @@ const getSetupStatus = (pool) => async (req, res) => {
  * Protegido pela senha padrão definida nas variáveis de ambiente.
  */
 const createDevUser = (pool) => async (req, res) => {
+    console.log('--- INÍCIO DA TENTATIVA DE SETUP ---');
+    
     const { name, email, password, defaultPassword } = req.body;
     
-    // Recupera a senha mestre e garante que espaços em branco extras sejam removidos
+    // Recupera a variável de ambiente
     const masterPasswordEnv = process.env.SETUP_MASTER_PASSWORD;
 
+    // --- LOGS DE DEBUG (REMOVER EM PRODUÇÃO DEPOIS DE VALIDAR) ---
+    // Isso vai nos mostrar exatamente o que o servidor tem guardado e o que ele recebeu
+    // Usamos JSON.stringify para ver se existem espaços invisíveis ou caracteres estranhos
+    console.log('[DEBUG COMPARAÇÃO] Variável ENV bruta:', JSON.stringify(masterPasswordEnv));
+    console.log('[DEBUG COMPARAÇÃO] Input do Usuário bruto:', JSON.stringify(defaultPassword));
+    // -------------------------------------------------------------
+
     if (!masterPasswordEnv) {
-        console.error('[SETUP] ERRO CRÍTICO: A variável de ambiente SETUP_MASTER_PASSWORD não está configurada.');
-        return res.status(500).json({ message: 'Erro de configuração interna do servidor.' });
+        console.error('[SETUP] ERRO CRÍTICO: SETUP_MASTER_PASSWORD não está definida no .env ou Environment Variables.');
+        return res.status(500).json({ message: 'Erro de configuração interna: Senha Mestre não definida.' });
     }
 
     if (!name || !email || !password || !defaultPassword) {
-        return res.status(400).json({ message: 'Todos os campos são obrigatórios: nome, e-mail, nova senha e a senha padrão.' });
+        return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
     }
 
-    // Normalização para comparação segura: converte para string e remove espaços das pontas de AMBOS os lados
-    const normalizedInputPassword = String(defaultPassword).trim();
-    const normalizedMasterPassword = String(masterPasswordEnv).trim();
+    // Normalização agressiva para garantir comparação justa
+    const normalizedInput = String(defaultPassword).trim();
+    const normalizedMaster = String(masterPasswordEnv).trim();
 
-    if (normalizedInputPassword !== normalizedMasterPassword) {
-        console.warn(`[SETUP] Tentativa de setup falhou: Senha mestre incorreta.`);
-        return res.status(403).json({ message: 'Senha de autorização para setup inválida.' });
+    console.log(`[DEBUG COMPARAÇÃO] Após trim() -> ENV: "${normalizedMaster}" vs INPUT: "${normalizedInput}"`);
+
+    if (normalizedInput !== normalizedMaster) {
+        console.warn(`[SETUP] Falha na autenticação. As senhas não coincidem.`);
+        return res.status(403).json({ 
+            message: 'Senha de autorização para setup inválida.',
+            debug_info: 'Verifique os logs do servidor para detalhe da comparação.' 
+        });
     }
     
     try {
-        // Verifica novamente se já existe usuário para evitar condições de corrida
         const devCheckQuery = `SELECT COUNT(*) FROM users WHERE LOWER(role) IN ('dev', 'developer', 'admin', 'administrator')`;
         const devCheckResult = await pool.query(devCheckQuery);
 
         if (parseInt(devCheckResult.rows[0].count, 10) > 0) {
-            return res.status(409).json({ message: 'O setup já foi concluído. A senha padrão não pode mais ser usada.' });
+            return res.status(409).json({ message: 'O setup já foi concluído anteriormente.' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        // Gera uma API Key segura para uso futuro
         const apiKey = `prod_sk_${crypto.randomBytes(16).toString('hex')}`;
         const devRole = 'dev';
 
@@ -73,7 +84,7 @@ const createDevUser = (pool) => async (req, res) => {
 
         const result = await pool.query(newUserQuery, values);
         
-        console.log(`[SETUP] Administrador inicial criado com sucesso: ${email}`);
+        console.log(`[SETUP] Sucesso! Usuário criado: ${email}`);
 
         res.status(201).json({
             message: 'Usuário desenvolvedor criado com sucesso!',
@@ -81,14 +92,11 @@ const createDevUser = (pool) => async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Erro durante o setup do usuário dev:', error);
-        
-        // Código de erro do PostgreSQL para violação de chave única (Unique Constraint)
+        console.error('Erro durante o setup:', error);
         if (error.code === '23505') {
             return res.status(409).json({ message: 'Este e-mail já está cadastrado.' });
         }
-        
-        res.status(500).json({ message: 'Erro interno do servidor ao tentar criar usuário dev.' });
+        res.status(500).json({ message: 'Erro interno ao criar usuário.' });
     }
 };
 
