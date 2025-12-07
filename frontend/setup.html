@@ -1,4 +1,3 @@
-<!-- frontend/setup.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuração Inicial - Dashboard de Eventos</title>
     
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    
     <link rel="icon" href="/faviconapp/favicon.ico?v=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- MODIFICADO: Corrigido o caminho do CSS para ser relativo -->
     <link rel="stylesheet" href="./src/css/login.css">
 </head>
 <body>
     <div class="login-container">
         <form id="setup-form">
             <div class="login-header">
-                <!-- MODIFICADO: Corrigido o caminho da imagem para ser relativo -->
                 <img src="./Logo.png" alt="Logo do App" class="login-logo">
                 <h1>Configuração Inicial</h1>
                 <p>Bem-vindo! Crie o usuário administrador para iniciar.</p>
@@ -48,10 +46,6 @@
         </form>
     </div>
 
-    <!-- 
-      MODIFICADO: 
-      1. Corrigido o caminho de 'src="/src/..."' para 'src="./src/..."' (caminho relativo).
-    -->
     <script type="module" src="./src/js/setup.js"></script>
 </body>
 </html>
