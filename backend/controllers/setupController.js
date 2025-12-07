@@ -24,23 +24,15 @@ const getSetupStatus = (pool) => async (req, res) => {
 
 /**
  * Cria o primeiro usuário 'dev' da aplicação.
- * Protegido pela senha padrão que só funciona uma vez.
+ * Protegido pela senha padrão definida nas variáveis de ambiente.
  */
 const createDevUser = (pool) => async (req, res) => {
-    
-    // --- ALTERAÇÃO DE TESTE (1) ---
-    // Este log DEVE aparecer no Easypanel se o novo código estiver rodando.
-    console.log('[SETUP DEBUG] ROTA /api/setup/create-dev-user FOI ACIONADA.');
-    // --- FIM DA ALTERAÇÃO ---
-
     const { name, email, password, defaultPassword } = req.body;
     
-    const masterPassword = process.env.SETUP_MASTER_PASSWORD;
+    // Recupera a senha mestre e garante que espaços em branco extras sejam removidos
+    const masterPasswordEnv = process.env.SETUP_MASTER_PASSWORD;
 
-    // Log de depuração temporário:
-    console.log(`[SETUP DEBUG] Variável de ambiente lida pelo processo: '${masterPassword}'`);
-
-    if (!masterPassword) {
+    if (!masterPasswordEnv) {
         console.error('[SETUP] ERRO CRÍTICO: A variável de ambiente SETUP_MASTER_PASSWORD não está configurada.');
         return res.status(500).json({ message: 'Erro de configuração interna do servidor.' });
     }
@@ -49,27 +41,26 @@ const createDevUser = (pool) => async (req, res) => {
         return res.status(400).json({ message: 'Todos os campos são obrigatórios: nome, e-mail, nova senha e a senha padrão.' });
     }
 
-    const trimmedDefaultPassword = String(defaultPassword).trim();
+    // Normalização para comparação segura: converte para string e remove espaços das pontas de AMBOS os lados
+    const normalizedInputPassword = String(defaultPassword).trim();
+    const normalizedMasterPassword = String(masterPasswordEnv).trim();
 
-    if (trimmedDefaultPassword !== masterPassword) {
-        console.warn(`[SETUP] Tentativa de setup com senha mestre incorreta.`);
-        console.warn(`[SETUP] Recebido: '${defaultPassword}'`);
-        
-        // --- ALTERAÇÃO DE TESTE (2) ---
-        // Mudamos a mensagem de erro para provar que o código novo está rodando.
-        return res.status(403).json({ message: 'TESTE-DEPLOY: Senha inválida.' });
-        // --- FIM DA ALTERAÇÃO ---
+    if (normalizedInputPassword !== normalizedMasterPassword) {
+        console.warn(`[SETUP] Tentativa de setup falhou: Senha mestre incorreta.`);
+        return res.status(403).json({ message: 'Senha de autorização para setup inválida.' });
     }
     
     try {
+        // Verifica novamente se já existe usuário para evitar condições de corrida
         const devCheckQuery = `SELECT COUNT(*) FROM users WHERE LOWER(role) IN ('dev', 'developer', 'admin', 'administrator')`;
         const devCheckResult = await pool.query(devCheckQuery);
 
-        if (devCheckResult.rows[0].count > 0) {
+        if (parseInt(devCheckResult.rows[0].count, 10) > 0) {
             return res.status(409).json({ message: 'O setup já foi concluído. A senha padrão não pode mais ser usada.' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        // Gera uma API Key segura para uso futuro
         const apiKey = `prod_sk_${crypto.randomBytes(16).toString('hex')}`;
         const devRole = 'dev';
 
@@ -81,6 +72,9 @@ const createDevUser = (pool) => async (req, res) => {
         const values = [name, email, hashedPassword, devRole, apiKey];
 
         const result = await pool.query(newUserQuery, values);
+        
+        console.log(`[SETUP] Administrador inicial criado com sucesso: ${email}`);
+
         res.status(201).json({
             message: 'Usuário desenvolvedor criado com sucesso!',
             user: result.rows[0]
@@ -88,9 +82,12 @@ const createDevUser = (pool) => async (req, res) => {
 
     } catch (error) {
         console.error('Erro durante o setup do usuário dev:', error);
+        
+        // Código de erro do PostgreSQL para violação de chave única (Unique Constraint)
         if (error.code === '23505') {
             return res.status(409).json({ message: 'Este e-mail já está cadastrado.' });
         }
+        
         res.status(500).json({ message: 'Erro interno do servidor ao tentar criar usuário dev.' });
     }
 };
