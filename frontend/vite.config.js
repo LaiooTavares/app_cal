@@ -5,18 +5,14 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 const CWD = process.cwd();
 
-// Plugin para reescrita de URLs no servidor de desenvolvimento (mantido)
 const devServerRewritePlugin = {
     name: 'dev-server-rewrite',
     configureServer(server) {
         server.middlewares.use((req, res, next) => {
             const url = req.url;
-            // Ignora chamadas de API ou arquivos com extensão
             if (url.startsWith('/api/') || url.includes('.') || url.startsWith('/@')) {
                 return next();
             }
-            
-            // Regras de roteamento manual
             if (url === '/login' || url === '/login/') {
                 req.url = '/login.html';
             } else if (url === '/setup' || url === '/setup/') {
@@ -30,7 +26,7 @@ const devServerRewritePlugin = {
 };
 
 export default defineConfig({
-    base: './', // Caminhos relativos para maior compatibilidade
+    base: './', 
     resolve: {
         alias: {
             '@': path.resolve(CWD, './src'),
@@ -59,23 +55,14 @@ export default defineConfig({
     plugins: [
         devServerRewritePlugin,
         VitePWA({
-            registerType: 'autoUpdate',
-            // [IMPORTANTE] Listamos explicitamente os ícones para garantir que sejam copiados para a dist
-            includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', 'icon-192.png', 'icon-512.png'],
+            // --- [MUDANÇA CRÍTICA] ---
+            // selfDestroying: true força o navegador a apagar o Service Worker antigo imediatamente.
+            // Isso remove o cache corrompido que está causando o erro de Mixed Content.
+            selfDestroying: true, 
+            // -------------------------
             
-            workbox: {
-                // Limpeza agressiva de caches antigos para resolver o problema do Service Worker travado
-                cleanupOutdatedCaches: true,
-                globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-                
-                // Fallback para SPA
-                navigateFallback: '/index.html',
-                
-                // [CRÍTICO] Impede que o Service Worker tente interceptar essas rotas
-                // Isso resolve o Mixed Content no Login e Setup
-                navigateFallbackDenylist: [/^\/api/, /^\/setup/, /^\/login/] 
-            },
-
+            registerType: 'autoUpdate',
+            includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', 'icon-192.png', 'icon-512.png'],
             manifest: {
                 name: 'LaiCal - Agenda Inteligente',
                 short_name: 'LaiCal',
@@ -87,16 +74,14 @@ export default defineConfig({
                 scope: '/',
                 icons: [
                     {
-                        src: 'icon-192.png', // Caminho relativo (o plugin resolve)
+                        src: 'icon-192.png',
                         sizes: '192x192',
-                        type: 'image/png',
-                        purpose: 'any maskable'
+                        type: 'image/png'
                     },
                     {
                         src: 'icon-512.png',
                         sizes: '512x512',
-                        type: 'image/png',
-                        purpose: 'any maskable'
+                        type: 'image/png'
                     }
                 ]
             }
