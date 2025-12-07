@@ -4,7 +4,6 @@ const crypto = require('crypto');
 
 /**
  * Verifica se o setup inicial (criação do usuário dev) já foi realizado.
- * Esta função é pública e informa ao frontend se ele deve redirecionar para a página de setup.
  */
 const getSetupStatus = (pool) => async (req, res) => {
     try {
@@ -23,43 +22,38 @@ const getSetupStatus = (pool) => async (req, res) => {
 
 /**
  * Cria o primeiro usuário 'dev' da aplicação.
- * Protegido pela senha padrão definida nas variáveis de ambiente.
+ * VERSÃO DE DIAGNÓSTICO: Retorna os valores recebidos na mensagem de erro.
  */
 const createDevUser = (pool) => async (req, res) => {
-    console.log('--- INÍCIO DA TENTATIVA DE SETUP ---');
+    console.log('--- [DEBUG] TENTATIVA DE SETUP ---');
     
-    const { name, email, password, defaultPassword } = req.body;
+    // Tenta pegar de qualquer variação possível para garantir
+    const { name, email, password, defaultPassword, masterPassword, accessCode } = req.body;
     
-    // Recupera a variável de ambiente
+    // Prioridade: defaultPassword (que está no seu HTML)
+    const passwordReceived = defaultPassword || masterPassword || accessCode;
     const masterPasswordEnv = process.env.SETUP_MASTER_PASSWORD;
 
-    // --- LOGS DE DEBUG (REMOVER EM PRODUÇÃO DEPOIS DE VALIDAR) ---
-    // Isso vai nos mostrar exatamente o que o servidor tem guardado e o que ele recebeu
-    // Usamos JSON.stringify para ver se existem espaços invisíveis ou caracteres estranhos
-    console.log('[DEBUG COMPARAÇÃO] Variável ENV bruta:', JSON.stringify(masterPasswordEnv));
-    console.log('[DEBUG COMPARAÇÃO] Input do Usuário bruto:', JSON.stringify(defaultPassword));
-    // -------------------------------------------------------------
-
     if (!masterPasswordEnv) {
-        console.error('[SETUP] ERRO CRÍTICO: SETUP_MASTER_PASSWORD não está definida no .env ou Environment Variables.');
-        return res.status(500).json({ message: 'Erro de configuração interna: Senha Mestre não definida.' });
+        return res.status(500).json({ message: 'ERRO CRÍTICO: SETUP_MASTER_PASSWORD não definida no servidor.' });
     }
 
-    if (!name || !email || !password || !defaultPassword) {
-        return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+    if (!name || !email || !password || !passwordReceived) {
+        return res.status(400).json({ 
+            // Mostra exatamente o que chegou no corpo da requisição
+            message: `Campos faltando. O backend recebeu: ${JSON.stringify(req.body)}` 
+        });
     }
 
-    // Normalização agressiva para garantir comparação justa
-    const normalizedInput = String(defaultPassword).trim();
+    // Limpeza de espaços (trim) e conversão para string
+    const normalizedInput = String(passwordReceived).trim();
     const normalizedMaster = String(masterPasswordEnv).trim();
 
-    console.log(`[DEBUG COMPARAÇÃO] Após trim() -> ENV: "${normalizedMaster}" vs INPUT: "${normalizedInput}"`);
-
+    // COMPARAÇÃO
     if (normalizedInput !== normalizedMaster) {
-        console.warn(`[SETUP] Falha na autenticação. As senhas não coincidem.`);
+        // --- MENSAGEM DE ERRO DETALHADA PARA VOCÊ VER NA TELA ---
         return res.status(403).json({ 
-            message: 'Senha de autorização para setup inválida.',
-            debug_info: 'Verifique os logs do servidor para detalhe da comparação.' 
+            message: `DEBUG (Não é erro de código, é divergência): Recebi '${normalizedInput}' (tamanho: ${normalizedInput.length}) mas a senha no servidor é '${normalizedMaster}' (tamanho: ${normalizedMaster.length})` 
         });
     }
     
