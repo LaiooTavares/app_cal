@@ -12,35 +12,23 @@
     
     <link rel="stylesheet" href="./src/css/login.css">
 </head>
-<body>
-    <div class="login-container">
-        <form id="login-form">
-            <div class="login-header">
-                <img src="./Logo.png" alt="Logo do App" class="login-logo">
-                <h1>Bem-vindo</h1>
-                <p>Acesse sua conta para gerenciar seus eventos.</p>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-            </div>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
-            <div class="form-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" name="password" placeholder="Sua senha" required>
-            </div>
-            
-            <p id="error-message" class="login-error hidden"></p>
-
-            <button type="submit" class="btn-login">Entrar</button>
-
-            <div class="login-footer">
-                <a href="#">Esqueceu sua senha?</a>
-            </div>
-        </form>
-    </div>
-
-    <script type="module" src="./src/js/login.js"></script>
-</body>
-</html>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    console.log('Matando Service Worker:', registration);
+                    registration.unregister();
+                }
+            });
+            // Força o reload se detectar que havia um SW ativo
+            if (navigator.serviceWorker.controller) {
+                console.log('Service Worker detectado. Recarregando página...');
+                // window.location.reload(); // Descomente se quiser forçar reload automático
+            }
+        }
+    </script>
+    
+    </head>

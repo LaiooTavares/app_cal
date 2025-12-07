@@ -1,19 +1,22 @@
-// ARQUIVO: frontend/vite.config.js
+// Referência: frontend/vite.config.js
 import { defineConfig } from 'vite';
 import path from 'path';
 import { VitePWA } from 'vite-plugin-pwa';
 
 const CWD = process.cwd();
 
-// Mantivemos seu plugin de rewrite para desenvolvimento
+// Plugin para reescrita de URLs no servidor de desenvolvimento (mantido)
 const devServerRewritePlugin = {
     name: 'dev-server-rewrite',
     configureServer(server) {
         server.middlewares.use((req, res, next) => {
             const url = req.url;
+            // Ignora chamadas de API ou arquivos com extensão
             if (url.startsWith('/api/') || url.includes('.') || url.startsWith('/@')) {
                 return next();
             }
+            
+            // Regras de roteamento manual
             if (url === '/login' || url === '/login/') {
                 req.url = '/login.html';
             } else if (url === '/setup' || url === '/setup/') {
@@ -27,8 +30,7 @@ const devServerRewritePlugin = {
 };
 
 export default defineConfig({
-    // 'base: ./' ajuda a evitar erros de caminho absoluto em alguns servidores
-    base: './', 
+    base: './', // Caminhos relativos para maior compatibilidade
     resolve: {
         alias: {
             '@': path.resolve(CWD, './src'),
@@ -58,24 +60,24 @@ export default defineConfig({
         devServerRewritePlugin,
         VitePWA({
             registerType: 'autoUpdate',
-            // Isso diz ao plugin para incluir arquivos estáticos da pasta public no cache
-            includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', '**/*.png'],
+            // [IMPORTANTE] Listamos explicitamente os ícones para garantir que sejam copiados para a dist
+            includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', 'icon-192.png', 'icon-512.png'],
             
-            // --- CORREÇÃO DO ERRO DE MIXED CONTENT E CACHE ---
             workbox: {
-                // 1. Força a limpeza de caches antigos que podem estar bugados
+                // Limpeza agressiva de caches antigos para resolver o problema do Service Worker travado
                 cleanupOutdatedCaches: true,
-                // 2. Define quais arquivos guardar em cache
                 globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-                // 3. Fallback de navegação para SPA (Single Page Application)
+                
+                // Fallback para SPA
                 navigateFallback: '/index.html',
-                // 4. Evita cachear rotas de API ou imagens externas que possam dar erro
+                
+                // [CRÍTICO] Impede que o Service Worker tente interceptar essas rotas
+                // Isso resolve o Mixed Content no Login e Setup
                 navigateFallbackDenylist: [/^\/api/, /^\/setup/, /^\/login/] 
             },
 
-            // O Manifesto será GERADO automaticamente aqui
             manifest: {
-                name: 'LaiCal - Agenda Inteligente', // Use o nome final do seu app
+                name: 'LaiCal - Agenda Inteligente',
                 short_name: 'LaiCal',
                 description: 'Gerencie seus eventos e agenda com facilidade.',
                 theme_color: '#1A202C',
@@ -85,7 +87,7 @@ export default defineConfig({
                 scope: '/',
                 icons: [
                     {
-                        src: 'icon-192.png', // O sistema vai procurar isso em /public/icon-192.png
+                        src: 'icon-192.png', // Caminho relativo (o plugin resolve)
                         sizes: '192x192',
                         type: 'image/png',
                         purpose: 'any maskable'
