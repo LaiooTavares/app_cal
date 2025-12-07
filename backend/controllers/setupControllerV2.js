@@ -1,4 +1,4 @@
-// ARQUIVO: backend/controllers/setupControllerV2.js
+// Referência: backend/controllers/setupControllerV2.js
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
@@ -10,52 +10,57 @@ const getSetupStatus = (pool) => async (req, res) => {
         // Verifica se existe pelo menos 1 usuário no banco
         const userCheck = await pool.query('SELECT id FROM users LIMIT 1');
         
-        // Se rowCount > 0, setup JÁ FOI FEITO (needsSetup = false)
+        // Se rowCount > 0, significa que JÁ TEM usuário, então needsSetup = false.
+        // Se rowCount == 0, o banco está vazio, então needsSetup = true.
         const needsSetup = userCheck.rowCount === 0;
         
-        res.json({ needsSetup });
+        console.log(`[V2] Status do Setup verificado. Precisa de setup? ${needsSetup}`);
+        res.status(200).json({ needsSetup });
     } catch (error) {
-        console.error('Erro status setup:', error);
-        res.status(500).json({ message: 'Erro interno.' });
+        console.error('[V2] Erro ao verificar status:', error);
+        res.status(500).json({ message: 'Erro interno ao verificar setup.' });
     }
 };
 
 /**
  * Cria o administrador inicial.
- * Lógica baseada no seu "meu-app-chamados-backend" + Debug.
  */
 const createDevUser = (pool) => async (req, res) => {
-    console.log('--- [V2] SETUP INICIADO ---');
+    console.log('--- [V2] TENTATIVA DE CRIAÇÃO DE ADMIN ---');
 
     const { name, email, password, defaultPassword } = req.body;
 
-    // 1. Tenta pegar a senha de ambas as variáveis possíveis (para garantir)
-    const envPassword = process.env.SETUP_MASTER_PASSWORD || process.env.DEFAULT_PASSWORD;
+    // 1. Recupera a senha do .env (Tenta os dois nomes comuns para garantir)
+    const serverMasterPassword = process.env.SETUP_MASTER_PASSWORD || process.env.DEFAULT_PASSWORD;
 
-    if (!envPassword) {
-        return res.status(500).json({ message: 'ERRO: A senha mestre não está configurada no servidor (.env).' });
+    if (!serverMasterPassword) {
+        console.error('[V2] ERRO CRÍTICO: Variável de ambiente da senha mestre não encontrada.');
+        return res.status(500).json({ message: 'Erro de configuração do servidor (Senha Mestre não definida).' });
     }
 
     if (!name || !email || !password || !defaultPassword) {
         return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
     }
 
-    // 2. COMPARAÇÃO (Trim para evitar erros de espaço)
+    // 2. Normalização e Comparação (Remove espaços para evitar erros bobos)
     const inputPwd = String(defaultPassword).trim();
-    const serverPwd = String(envPassword).trim();
+    const serverPwd = String(serverMasterPassword).trim();
+
+    // LOG DE DEBUG (Dedo-duro): Vai mostrar no console do servidor o que chegou vs o que ele espera
+    console.log(`[V2] Comparando: Recebido='${inputPwd}' vs Esperado='${serverPwd}'`);
 
     if (inputPwd !== serverPwd) {
-        // --- MENSAGEM DE ERRO REVELADORA (DEBUG) ---
+        // Retorna o erro detalhado para a tela (apenas para debug, remova em produção real depois)
         return res.status(403).json({ 
-            message: `Senha Inválida. DEBUG -> Recebido: '${inputPwd}' | Servidor espera: '${serverPwd}'` 
+            message: `Senha de autorização inválida. DEBUG: Recebi '${inputPwd}' mas o servidor espera '${serverPwd}'` 
         });
     }
 
     try {
-        // 3. Verifica duplicidade (Segurança extra)
-        const userCheck = await pool.query('SELECT id FROM users LIMIT 1');
-        if (userCheck.rowCount > 0) {
-            return res.status(409).json({ message: 'O setup já foi realizado anteriormente.' });
+        // 3. Verificação de Segurança (Garante que o banco está vazio)
+        const checkUsers = await pool.query('SELECT count(*) FROM users');
+        if (parseInt(checkUsers.rows[0].count) > 0) {
+            return res.status(409).json({ message: 'O setup já foi realizado. Usuários já existem.' });
         }
 
         // 4. Criação do Usuário
@@ -70,19 +75,19 @@ const createDevUser = (pool) => async (req, res) => {
         
         const result = await pool.query(insertQuery, [name, email, hashedPassword, apiKey]);
 
-        console.log('[V2] Sucesso! Admin criado.');
+        console.log('[V2] Sucesso! Administrador criado:', email);
         
-        res.status(201).json({
-            message: 'Usuário administrador criado com sucesso!',
+        return res.status(201).json({
+            message: 'Administrador criado com sucesso!',
             user: result.rows[0]
         });
 
     } catch (error) {
-        console.error('Erro no setup:', error);
+        console.error('[V2] Erro ao salvar no banco:', error);
         if (error.code === '23505') { 
-            return res.status(409).json({ message: 'Este e-mail já está em uso.' });
+            return res.status(409).json({ message: 'Este e-mail já está cadastrado.' });
         }
-        res.status(500).json({ message: 'Erro interno ao criar administrador.' });
+        return res.status(500).json({ message: 'Erro interno ao criar administrador.' });
     }
 };
 
