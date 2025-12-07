@@ -9,20 +9,15 @@
 
     <link rel="icon" href="/faviconapp/favicon.ico?v=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
     <link rel="stylesheet" href="./src/css/login.css">
 
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
                 for(let registration of registrations) {
-                    console.log('Matando Service Worker:', registration);
                     registration.unregister();
                 }
             });
-            if (navigator.serviceWorker.controller) {
-                console.log('Service Worker detectado. Recarregando página...');
-            }
         }
     </script>
 </head>
@@ -47,7 +42,7 @@
             
             <p id="error-message" class="login-error hidden"></p>
 
-            <button type="submit" class="btn-login">Entrar</button>
+            <button type="submit" id="submit-button" class="btn-login">Entrar</button>
 
             <div class="login-footer">
                 <a href="#">Esqueceu sua senha?</a>
