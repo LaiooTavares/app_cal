@@ -6,7 +6,6 @@
     <title>Dashboard de Eventos</title>
     
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1A202C">
     
@@ -14,6 +13,17 @@
     <link rel="icon" href="/faviconapp/favicon.ico?v=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="./src/css/style.css">
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    console.log('Matando Service Worker:', registration);
+                    registration.unregister();
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="dashboard-container">
